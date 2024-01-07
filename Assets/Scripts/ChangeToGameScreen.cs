@@ -8,7 +8,7 @@ public class ChangeToGameScreen : MonoBehaviour
     // Public method to be called when the button is clicked
     public void ChangeToGame()
     {
-        // Replace "MainMenu" with the name of your main menu scene
+        // Load the game screen
         SceneManager.LoadScene("GameScreen");
     }
 }
