@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class FreezePlayer : MonoBehaviour
 {
-    // Reference to the main character's Rigidbody (assuming the main character has a Rigidbody)
+    // Reference to the main character's Rigidbody
     public Rigidbody MainCharacterRigidbody;
 
-    // Reference to the player's health manager (assuming you have a HealthManager script)
+    // Reference to the player's health manager
     public HealthManager playerHealthManager;
 
     // Variable to track whether the character is frozen
@@ -61,9 +61,6 @@ public class FreezePlayer : MonoBehaviour
 
         // Set the character as frozen
         isCharacterFrozen = true;
-
-        // Inflict damage to the player when the trap is triggered
-        playerHealthManager.TakeDamage(1);
     }
 
     // Function to unfreeze the character
@@ -82,5 +79,17 @@ public class FreezePlayer : MonoBehaviour
         // Reset the freeze timer and unfreeze the character
         isCharacterFrozen = false;
         freezeTimer = 3.0f;
+    }
+
+    // Detect collisions with the player
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if the collision is with the player
+        if (other.CompareTag("player"))
+        {
+            // Freeze the character
+            FreezeCharacter();
+
+        }
     }
 }

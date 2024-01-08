@@ -6,35 +6,48 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Initialize the character's health
-    public int maxHealth = 3;
-    private int currentHealth;
-    public int damageAmount = 1;
+    public int startingHealth = 3; // Player's starting health
+    public int currentHealth; // Player's current health
+    public string targetScene = "DeathScreen";
 
-    private void Start()
+    private void Awake()
     {
-        // Set the initial health
-        currentHealth = maxHealth;
+        // Initialize our current health to be equal to
+        // our starting health at the beginning of the game.
+        currentHealth = startingHealth;
     }
 
-    // Function to take damage
-    public void TakeDamage(int damageAmount)
+    // Modify the TakeDamage method to accept a damage value
+    public void TakeDamage(int damage)
     {
-        // Check if the character is not already dead
-        if (currentHealth > 0)
-        {
-            // Reduce the character's health by the damage amount
-            currentHealth -= damageAmount;
+        // Deduct the damage amount from our current health
+        currentHealth -= damage;
 
-            // Check if the character's health has reached zero
-            if (currentHealth <= 0)
-            {
-                // Load Game Over Screen
-                SceneManager.LoadScene("DeathScreen");
-            }
+        // Keep our currentHealth between 0 and starting health value
+        currentHealth = Mathf.Clamp(currentHealth, 0, startingHealth);
+
+        if (currentHealth <= 0)
+        {
+            // Call the Kill function to handle player death
+            Kill();
         }
     }
-    
-        
-    
+
+    public void Kill()
+    {
+        // When the players health reaches zero, excute change scene function
+        ChangeScene();
+    }
+
+    // This function will let other scripts ask this one what the current health is
+    public int GetHealth()
+    {
+        return currentHealth;
+    }
+
+    // This function changes the scene when the player dies
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene(targetScene);
+    }
 }
