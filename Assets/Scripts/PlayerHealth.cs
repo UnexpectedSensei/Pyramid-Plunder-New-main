@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int startingHealth = 3; // Player's starting health
+    public int startingHealth = 1; // Player's starting health
     public int currentHealth; // Player's current health
     public string targetScene = "DeathScreen";
 

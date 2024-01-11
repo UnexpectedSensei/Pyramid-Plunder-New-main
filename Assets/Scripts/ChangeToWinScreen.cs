@@ -5,14 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class ChangeToWinScreen : MonoBehaviour
 {
-    // Set this in the Unity Inspector to the name of the scene you want to load when the win condition is met.
+    // Setting scene to be loaded.
     public string winSceneName = "Win Screen";
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        // Check if the collision occurred with an object tagged as "Player"
-        if (collision.gameObject.CompareTag("Player"))
+        // Check if the collider belongs to an object tagged as "Player"
+        if (other.CompareTag("Player"))
         {
+            Debug.Log("Player has entered trigger area");
             // Load the "WinScreen" scene
             SceneManager.LoadScene(winSceneName);
         }
