@@ -5,44 +5,58 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5.0f; // Adjust this value to control movement speed.
-    private Rigidbody rb;
+    private CharacterController characterController;
+    private bool isFrozen = false; // Flag to track if the character is frozen
 
     public Transform cameraTransform; // Reference to the camera's transform
     public float lookSpeed = 2.0f; // Adjust this value to control camera sensitivity
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
-        // Input for player movement.
-        float horizontalInput = Input.GetAxis("Horizontal"); // A/D or Left/Right arrow keys
-        float verticalInput = Input.GetAxis("Vertical"); // W/S or Up/Down arrow keys
+        if (!isFrozen)
+        {
+            // Input for player movement.
+            float horizontalInput = Input.GetAxis("Horizontal"); // A/D or Left/Right arrow keys
+            float verticalInput = Input.GetAxis("Vertical"); // W/S or Up/Down arrow keys
 
-        // Calculate the movement vector.
-        Vector3 movement = new Vector3(horizontalInput, 0.0f, verticalInput);
+            // Calculate the movement vector.
+            Vector3 movement = new Vector3(horizontalInput, 0.0f, verticalInput);
+            movement = transform.TransformDirection(movement) * moveSpeed;
 
-        // Normalize the vector to prevent faster diagonal movement.
-        movement.Normalize();
+            // Apply the movement to the CharacterController.
+            characterController.Move(movement * Time.deltaTime);
 
-        // Apply the movement to the Rigidbody.
-        rb.velocity = transform.TransformDirection(movement) * moveSpeed;
+            // Camera Look Input
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
 
-        // Camera Look Input
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+            // Rotate the player's transform based on mouse input for camera control
+            transform.Rotate(Vector3.up * mouseX * lookSpeed);
 
-        // Rotate the player's transform based on mouse input for camera control
-        transform.Rotate(Vector3.up * mouseX * lookSpeed);
+            // Rotate the camera's transform based on mouse input for looking up and down
+            cameraTransform.Rotate(Vector3.left * mouseY * lookSpeed);
 
-        // Rotate the camera's transform based on mouse input for looking up and down
-        cameraTransform.Rotate(Vector3.left * mouseY * lookSpeed);
+            // Clamp the camera rotation to prevent over-rotation
+            Vector3 currentRotation = cameraTransform.localEulerAngles;
+            currentRotation.x = Mathf.Clamp(currentRotation.x, -90f, 90f);
+            cameraTransform.localEulerAngles = currentRotation;
+        }
+    }
 
-        // Clamp the camera rotation to prevent over-rotation
-        Vector3 currentRotation = cameraTransform.localEulerAngles;
-        currentRotation.x = Mathf.Clamp(currentRotation.x, -90f, 90f);
-        cameraTransform.localEulerAngles = currentRotation;
+    // Function to freeze/unfreeze the character
+    public void FreezeCharacter()
+    {
+        isFrozen = !isFrozen;
+
+        // If character is frozen, stop the character's movement
+        if (isFrozen)
+        {
+            characterController.Move(Vector3.zero);
+        }
     }
 }

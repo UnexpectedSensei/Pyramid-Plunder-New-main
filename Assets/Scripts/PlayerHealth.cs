@@ -17,11 +17,11 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = startingHealth;
     }
 
-    // Modify the TakeDamage method to accept a damage value
-    public void TakeDamage(int damage)
+    // Modify the TakeDamage method to always deduct 1 from current health
+    public void TakeDamage()
     {
-        // Deduct the damage amount from our current health
-        currentHealth -= damage;
+        // Deduct 1 from our current health
+        currentHealth--;
 
         // Keep our currentHealth between 0 and starting health value
         currentHealth = Mathf.Clamp(currentHealth, 0, startingHealth);
@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Kill()
     {
-        // When the players health reaches zero, excute change scene function
+        // When the players health reaches zero, execute change scene function
         ChangeScene();
     }
 

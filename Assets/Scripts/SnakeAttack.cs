@@ -13,7 +13,7 @@ public class SnakeAttack : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the main character enters the snake's box collider
-        if (other.CompareTag("MainCharacter") && !hasAttacked)
+        if (other.CompareTag("Player") && !hasAttacked)
         {
             // Play snake attack animation
             snakeAnimator.SetTrigger("SnakeAttack");
@@ -32,7 +32,7 @@ public class SnakeAttack : MonoBehaviour
     // Reset the hasAttacked flag when the player exits the trigger
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("player"))
+        if (other.CompareTag("Player"))
         {
             hasAttacked = false;
         }
@@ -44,8 +44,8 @@ public class SnakeAttack : MonoBehaviour
         // Check if the health manager reference is not null
         if (healthManager != null)
         {
-            // Deduct 1 damage from the player's health
-            healthManager.TakeDamage(1);
+            // Damage the player by calling TakeDamage without arguments
+            healthManager.TakeDamage();
         }
         else
         {

@@ -10,8 +10,8 @@ public class ChangeToWinScreen : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if the collision occurred with the intended object
-        if (collision.gameObject.CompareTag("GameObject"))
+        // Check if the collision occurred with an object tagged as "Player"
+        if (collision.gameObject.CompareTag("Player"))
         {
             // Load the "WinScreen" scene
             SceneManager.LoadScene(winSceneName);

@@ -54,11 +54,11 @@ public class HealthManager : MonoBehaviour
     }
 
     // Function to update the player's health
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
         if (player != null)
         {
-            player.TakeDamage(damage);
+            player.TakeDamage();
         }
     }
 }

@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Environment
   - Water
   - UI
-  - 
-  - 
+  - Enemy
+  - Character
   - 
   - 
   - 
@@ -39,5 +39,8 @@ TagManager:
   - 
   m_SortingLayers:
   - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Environme
     uniqueID: 0
     locked: 0

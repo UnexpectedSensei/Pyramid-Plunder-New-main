@@ -84,12 +84,11 @@ public class FreezePlayer : MonoBehaviour
     // Detect collisions with the player
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the collision is with the player
-        if (other.CompareTag("player"))
+        // Check if the collision is with the player's Box Collider
+        if (other.gameObject.CompareTag("Player"))
         {
-            // Freeze the character
-            FreezeCharacter();
-
+            // Execute the FreezeCharacter function for the player
+            other.gameObject.GetComponent<PlayerMovement>().FreezeCharacter();
         }
     }
 }
